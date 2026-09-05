@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LogiBridge | Bridging logistics talent with industry demand.</title>
+    <meta
+      name="description"
+      content="LogiBridge is a demand-driven skill development and workforce intelligence platform for India’s logistics sector."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-wrap" aria-label="LogiBridge brand">
+          <div class="brand-mark" aria-hidden="true">
+            <span class="bridge-shape"></span>
+          </div>
+          <div class="brand-text">
+            <span class="brand-name">LogiBridge</span>
+            <small>Bridging logistics talent with industry demand.</small>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Main navigation" id="mainNav" hidden>
+          <button class="nav-link active" data-view="profile">Profile</button>
+          <button class="nav-link" data-view="dashboard">Dashboard</button>
+          <button class="nav-link employee-only" data-view="skills">Skills</button>
+          <button class="nav-link" data-view="jobs">Jobs</button>
+          <button class="nav-link" data-view="learning">Learning</button>
+          <button class="nav-link" data-view="insights">Insights</button>
+        </nav>
+
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <span class="toggle-icon">☀️</span>
+        </button>
+      </header>
+
+      <main class="app-main">
+        <section id="login-page" class="page active" data-view="login">
+          <div class="login-layout">
+            <div class="login-visual panel">
+              <div class="brand-inline">
+                <div class="brand-mark small" aria-hidden="true">
+                  <span class="bridge-shape"></span>
+                </div>
+                <span class="brand-name">LogiBridge</span>
+              </div>
+
+              <h1>Build the workforce industry actually needs.</h1>
+              <p>
+                Connect skills, people and logistics opportunities through real industry demand.
+              </p>
+
+              <div class="route-illustration" aria-hidden="true">
+                <div class="warehouse warehouse-left">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="route-line"></div>
+                <div class="route-node node-1"></div>
+                <div class="route-node node-2"></div>
+                <div class="route-node node-3"></div>
+                <div class="truck">
+                  <div class="truck-cabin"></div>
+                  <div class="truck-body"></div>
+                  <div class="wheel wheel-1"></div>
+                  <div class="wheel wheel-2"></div>
+                </div>
+                <div class="box box-1"></div>
+                <div class="box box-2"></div>
+                <div class="box box-3"></div>
+                <div class="icon icon-warehouse">▣</div>
+                <div class="icon icon-route">⇄</div>
+                <div class="icon icon-trend">↗</div>
+              </div>
+
+              <ul class="feature-list" aria-label="Key benefits">
+                <li>✓ Industry-linked skills</li>
+                <li>✓ Workforce matching</li>
+                <li>✓ Personalised upskilling</li>
+              </ul>
+            </div>
+
+            <div class="login-card panel">
+              <div class="card-header">
+                <p class="eyebrow">Welcome</p>
+                <h2>Access your workspace</h2>
+              </div>
+
+              <div class="demo-alert">
+                Demo verification — do not enter real Aadhaar or OTP details.
+              </div>
+
+              <form id="loginForm" novalidate>
+                <div class="field-group">
+                  <label for="fullName">Full Name</label>
+                  <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" />
+                </div>
+
+                <div class="field-group">
+                  <label for="phoneNumber">Phone Number</label>
+                  <input id="phoneNumber" name="phoneNumber" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number" />
+                </div>
+
+                <div class="field-group">
+                  <label for="aadhaarNumber">Aadhaar Number</label>
+                  <input id="aadhaarNumber" name="aadhaarNumber" type="text" inputmode="numeric" maxlength="12" placeholder="12-digit Aadhaar number" />
+                </div>
+
+                <div class="field-group otp-group">
+                  <label for="otpNumber">OTP</label>
+                  <div class="otp-row">
+                    <input id="otpNumber" name="otpNumber" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" disabled />
+                    <button type="button" id="sendOtpBtn" class="ghost-btn">Send OTP</button>
+                  </div>
+                  <small id="otpStatus" class="otp-status">OTP required</small>
+                </div>
+
+                <div class="field-group">
+                  <label for="gstinNumber">GSTIN</label>
+                  <input id="gstinNumber" name="gstinNumber" type="text" placeholder="Optional" />
+                </div>
+
+                <div id="formMessage" class="form-message" aria-live="polite"></div>
+
+                <button type="submit" class="primary-btn wide-btn">
+                  Continue to workspace →
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="role-page" class="page hidden" data-view="role">
+          <div class="page-header narrow">
+            <p class="eyebrow">Your workspace</p>
+            <h2>What brings you to LogiBridge?</h2>
+            <p class="muted">Choose your role to get a workspace built around your needs.</p>
+          </div>
+
+          <div class="role-grid">
+            <article class="role-card">
+              <div class="role-icon" aria-hidden="true">👷</div>
+              <h3>Employee</h3>
+              <p>
+                Build your skills, discover relevant logistics opportunities and grow with changing industry demand.
+              </p>
+              <button class="primary-btn role-btn" data-role="employee">Open Employee Workspace →</button>
+            </article>
+
+            <article class="role-card">
+              <div class="role-icon" aria-hidden="true">🏭</div>
+              <h3>Employer</h3>
+              <p>
+                Define your logistics requirements, discover skilled workers and identify capability gaps.
+              </p>
+              <button class="primary-btn role-btn" data-role="employer">Open Employer Workspace →</button>
+            </article>
+          </div>
+        </section>
+
+        <section id="employee-workspace" class="page hidden" data-view="employee-workspace">
+          <div class="page-header narrow">
+            <p class="eyebrow">Employee workspace</p>
+            <h2>What do you want to work on today?</h2>
+          </div>
+
+          <div class="workspace-grid">
+            <button class="workspace-card" data-open="profile">
+              <span class="workspace-icon">👤</span>
+              <span class="workspace-title">My Profile</span>
+              <span class="workspace-text">Skills, credentials and readiness.</span>
+            </button>
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">📊</span>
+              <span class="workspace-title">Skill Assessment</span>
+              <span class="workspace-text">Identify strengths and gaps.</span>
+            </button>
+            <button class="workspace-card" data-open="learning">
+              <span class="workspace-icon">🎓</span>
+              <span class="workspace-title">Learning</span>
+              <span class="workspace-text">Recommended courses and certifications.</span>
+            </button>
+            <button class="workspace-card" data-open="skills">
+              <span class="workspace-icon">🧭</span>
+              <span class="workspace-title">Skills</span>
+              <span class="workspace-text">Find learning pathways for your next skill.</span>
+            </button>
+            <button class="workspace-card" data-open="jobs">
+              <span class="workspace-icon">💼</span>
+              <span class="workspace-title">Jobs</span>
+              <span class="workspace-text">Opportunities tailored to your profile.</span>
+            </button>
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">🚚</span>
+              <span class="workspace-title">Logistics Skills</span>
+              <span class="workspace-text">Fleet, warehouse, cargo and WMS skills.</span>
+            </button>
+            <button class="workspace-card" data-open="insights">
+              <span class="workspace-icon">📈</span>
+              <span class="workspace-title">Industry Demand</span>
+              <span class="workspace-text">See what employers need right now.</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="employer-workspace" class="page hidden" data-view="employer-workspace">
+          <div class="page-header narrow">
+            <p class="eyebrow">Employer workspace</p>
+            <h2>What are you managing today?</h2>
+          </div>
+
+          <div class="workspace-grid">
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">🚚</span>
+              <span class="workspace-title">Fleet</span>
+              <span class="workspace-text">Vehicle requirements, capacity and cargo.</span>
+            </button>
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">👨‍✈️</span>
+              <span class="workspace-title">Drivers</span>
+              <span class="workspace-text">Driver experience and licence needs.</span>
+            </button>
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">🏭</span>
+              <span class="workspace-title">Warehouse</span>
+              <span class="workspace-text">Storage, size and WMS requirements.</span>
+            </button>
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">📦</span>
+              <span class="workspace-title">Cargo</span>
+              <span class="workspace-text">Cargo type, handling and configuration.</span>
+            </button>
+            <button class="workspace-card" data-open="dashboard">
+              <span class="workspace-icon">👥</span>
+              <span class="workspace-title">Workforce</span>
+              <span class="workspace-text">Employee quantity, skills and experience.</span>
+            </button>
+            <button class="workspace-card" data-open="insights">
+              <span class="workspace-icon">📊</span>
+              <span class="workspace-title">Insights</span>
+              <span class="workspace-text">Skill gaps and market demand.</span>
+            </button>
+          </div>
+        </section>
+
+        <section id="profile-page" class="page hidden" data-view="profile">
+          <div class="page-header narrow">
+            <button class="back-btn" data-back type="button">← Back</button>
+            <p class="eyebrow">Profile</p>
+            <h2>My profile</h2>
+          </div>
+
+          <div class="profile-layout">
+            <div class="panel profile-card">
+              <div class="profile-header">
+                <div class="avatar">LS</div>
+                <div>
+                  <h3 id="profileName">User Name</h3>
+                  <p id="profileRole">Employee</p>
+                </div>
+              </div>
+
+              <div class="profile-meta-grid">
+                <div class="meta-item">
+                  <span>Phone</span>
+                  <strong id="profilePhone">+91 ••••••000</strong>
+                </div>
+                <div class="meta-item">
+                  <span>City</span>
+                  <strong id="profileCity">Pune</strong>
+                </div>
+                <div class="meta-item">
+                  <span>Skill Readiness</span>
+                  <strong>72%</strong>
+                </div>
+                <div class="meta-item">
+                  <span>Credentials</span>
+                  <strong>03 verified</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel profile-card">
+              <div class="section-header small-gap">
+                <h3>Skills summary</h3>
+              </div>
+              <ul class="mini-list">
+                <li>Warehouse Operations — 86%</li>
+                <li>Inventory &amp; WMS — 68%</li>
+                <li>Route Planning — 61%</li>
+                <li>Cold Chain Handling — 42%</li>
+              </ul>
+            </div>
+
+            <div class="panel profile-card">
+              <div class="section-header small-gap">
+                <h3>Account preferences</h3>
+              </div>
+              <div class="toggle-row">
+                <label for="profileThemeToggle">Dark mode</label>
+                <button id="profileThemeToggle" class="switch-button" type="button" aria-label="Toggle dark mode">
+                  <span class="switch-knob"></span>
+                </button>
+              </div>
+              <div class="toggle-row">
+                <label>Notifications</label>
+                <span class="tag-status">Enabled</span>
+              </div>
+              <div class="toggle-row">
+                <label>Job alerts</label>
+                <span class="tag-status">Active</span>
+              </div>
+              <button id="logoutBtn" class="danger-btn full-width" type="button">Logout</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="dashboard-page" class="page hidden" data-view="dashboard">
+          <div class="page-header employee-header">
+            <div>
+              <button class="back-btn" data-back type="button">← Back</button>
+              <p class="eyebrow">Dashboard</p>
+              <h2 id="dashboardTitle">Good to see you, Team Member.</h2>
+            </div>
+            <div class="city-select-wrap">
+              <label for="dashboardCity">Location</label>
+              <select id="dashboardCity">
+                <option>Delhi NCR</option>
+                <option>Bengaluru</option>
+                <option>Mumbai</option>
+                <option>Pune</option>
+                <option>Hyderabad</option>
+                <option>Chennai</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="employeeDashboard" class="dashboard-shell">
+            <div class="summary-grid">
+              <article class="metric-card interactive" data-open="dashboard">
+                <div class="metric-header"><span>Skill Readiness</span><strong>72%</strong></div>
+                <div class="progress-bar"><span style="width:72%"></span></div>
+              </article>
+              <article class="metric-card interactive" data-open="jobs">
+                <div class="metric-header"><span>Industry Matches</span><strong>14</strong></div>
+                <p class="metric-footnote">+4 this week</p>
+              </article>
+              <article class="metric-card interactive" data-open="profile">
+                <div class="metric-header"><span>Credentials</span><strong>03</strong></div>
+                <p class="metric-footnote">1 recommended</p>
+              </article>
+            </div>
+
+            <div class="content-grid">
+              <section class="panel info-panel interactive" data-open="dashboard">
+                <div class="section-header"><h3>Skill gaps</h3></div>
+                <ul class="mini-list">
+                  <li>Cold Chain Handling — 42%</li>
+                  <li>Digital Documentation — 48%</li>
+                  <li>Inventory &amp; WMS — 68%</li>
+                </ul>
+              </section>
+
+              <section class="panel info-panel interactive" data-open="learning">
+                <div class="section-header"><h3>Recommended learning</h3></div>
+                <div class="story-card">
+                  <h4>Learn Cold-Chain Handling</h4>
+                  <p>Demand is rising in Pune, Hyderabad and Chennai.</p>
+                </div>
+              </section>
+            </div>
+
+            <section class="panel info-panel">
+              <div class="section-header"><h3>Current industry demand</h3></div>
+              <div class="demand-list compact">
+                <div class="demand-item"><span>Warehouse Management Systems</span><em class="demand-badge high">HIGH DEMAND</em></div>
+                <div class="demand-item"><span>Cold Chain Operations</span><em class="demand-badge rising">RISING</em></div>
+                <div class="demand-item"><span>Route Optimisation</span><em class="demand-badge high">HIGH DEMAND</em></div>
+              </div>
+            </section>
+
+            <section class="panel info-panel">
+              <div class="section-header"><h3>Recent activity</h3></div>
+              <div class="activity-list">
+                <div class="activity-item"><span>Skill profile refreshed</span><time>Today</time></div>
+                <div class="activity-item"><span>Cold-chain course recommended</span><time>1 day ago</time></div>
+                <div class="activity-item"><span>Job match improved by 6%</span><time>3 days ago</time></div>
+              </div>
+            </section>
+          </div>
+
+          <div id="employerDashboard" class="dashboard-shell hidden">
+            <div class="summary-grid">
+              <article class="metric-card interactive" data-open="dashboard">
+                <div class="metric-header"><span>Active requirements</span><strong>06</strong></div>
+                <p class="metric-footnote">Across all metros</p>
+              </article>
+              <article class="metric-card interactive" data-open="dashboard">
+                <div class="metric-header"><span>Fleet requirements</span><strong>04</strong></div>
+                <p class="metric-footnote">2 refrigerated</p>
+              </article>
+              <article class="metric-card interactive" data-open="dashboard">
+                <div class="metric-header"><span>Skill gaps</span><strong>12</strong></div>
+                <p class="metric-footnote">4 urgent</p>
+              </article>
+            </div>
+
+            <div class="content-grid">
+              <section class="panel info-panel interactive" data-open="dashboard">
+                <div class="section-header"><h3>Warehouse requirements</h3></div>
+                <ul class="mini-list">
+                  <li>Cold-chain storage</li>
+                  <li>WMS required</li>
+                  <li>Hyderabad / Chennai demand</li>
+                </ul>
+              </section>
+
+              <section class="panel info-panel interactive" data-open="insights">
+                <div class="section-header"><h3>Matching results</h3></div>
+                <div class="story-card">
+                  <h4>12 potential matches found</h4>
+                  <p>8 Skilled • 3 Upskill-ready • 1 Training recommended</p>
+                </div>
+              </section>
+            </div>
+
+            <section class="panel info-panel">
+              <div class="section-header"><h3>Industry demand</h3></div>
+              <div class="demand-list compact">
+                <div class="demand-item"><span>WMS</span><em class="demand-badge high">HIGH DEMAND</em></div>
+                <div class="demand-item"><span>Cold Chain</span><em class="demand-badge rising">RISING</em></div>
+                <div class="demand-item"><span>Fleet Management</span><em class="demand-badge stable">STABLE</em></div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section id="jobs-page" class="page hidden" data-view="jobs">
+          <div class="page-header narrow">
+            <button class="back-btn" data-back type="button">← Back</button>
+            <p class="eyebrow">Jobs</p>
+            <h2>Logistics opportunities</h2>
+          </div>
+
+          <div class="filters-panel panel">
+            <div class="filter-grid">
+              <label>
+                <span>City</span>
+                <select id="filterCity">
+                  <option value="All">All cities</option>
+                  <option>Delhi NCR</option>
+                  <option>Bengaluru</option>
+                  <option>Mumbai</option>
+                  <option>Pune</option>
+                  <option>Hyderabad</option>
+                  <option>Chennai</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Job category</span>
+                <select id="filterCategory">
+                  <option value="All">All categories</option>
+                  <option>Warehouse</option>
+                  <option>Fleet</option>
+                  <option>Inventory</option>
+                  <option>Logistics</option>
+                  <option>Supply Chain</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Experience</span>
+                <select id="filterExperience">
+                  <option value="All">All experience</option>
+                  <option>0-1 years</option>
+                  <option>1-3 years</option>
+                  <option>3-5 years</option>
+                  <option>5+ years</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Skills</span>
+                <select id="filterSkill">
+                  <option value="All">All skills</option>
+                  <option>WMS</option>
+                  <option>Cold Chain</option>
+                  <option>Inventory</option>
+                  <option>Route Planning</option>
+                  <option>Fleet Management</option>
+                  <option>Documentation</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Employment type</span>
+                <select id="filterEmployment">
+                  <option value="All">All types</option>
+                  <option>Full time</option>
+                  <option>Contract</option>
+                  <option>Temporary</option>
+                  <option>Internship</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div id="jobsList" class="job-list-grid"></div>
+        </section>
+
+        <section id="skills-page" class="page hidden" data-view="skills">
+          <div class="page-header narrow">
+            <button class="back-btn" data-back type="button">← Back</button>
+            <p class="eyebrow">Employee skills</p>
+            <h2>Which skill do you want to develop?</h2>
+            <p class="muted">Start with one skill. LogiBridge will connect it to credible learning pathways and career readiness.</p>
+          </div>
+
+          <section class="panel skills-discovery-panel">
+            <label class="skill-search-label" for="skillSearch">Search skills</label>
+            <input id="skillSearch" class="skill-search" type="search" placeholder="Try WMS, cold chain or analytics" />
+            <div class="section-header skill-section-header"><h3>Popular skills</h3><span class="muted">Select one to see relevant resources</span></div>
+            <div id="popularSkills" class="chips-wrap"></div>
+          </section>
+
+          <section id="skillResults" class="skill-results hidden">
+            <div class="section-header">
+              <div>
+                <p class="eyebrow">Selected pathway</p>
+                <h3 id="skillResultsTitle">Courses for Warehouse Management</h3>
+              </div>
+              <button id="clearSkill" class="secondary-btn" type="button">Clear</button>
+            </div>
+            <div class="compact-filters">
+              <select id="skillProviderFilter" aria-label="Filter by provider type">
+                <option value="All">All providers</option>
+                <option value="Government / Public">Government / Government-backed</option>
+                <option value="Industry / Professional">Professional / Industry</option>
+              </select>
+              <select id="skillLevelFilter" aria-label="Filter by difficulty">
+                <option value="All">All levels</option>
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+              </select>
+            </div>
+            <div id="skillCourseList" class="learning-grid"></div>
+          </section>
+        </section>
+
+        <section id="learning-page" class="page hidden" data-view="learning">
+          <div class="page-header narrow">
+            <button class="back-btn" data-back type="button">← Back</button>
+            <p class="eyebrow">Learning hub</p>
+            <h2>Logistics Learning Hub</h2>
+            <p class="muted">Connect the skill gap with credible learning pathways.</p>
+          </div>
+
+          <div id="learningList" class="learning-grid"></div>
+        </section>
+
+        <section id="insights-page" class="page hidden" data-view="insights">
+          <div class="page-header narrow">
+            <button class="back-btn" data-back type="button">← Back</button>
+            <p class="eyebrow">Insights</p>
+            <h2>Logistics Skill Intelligence</h2>
+          </div>
+
+          <div class="insights-grid">
+            <div class="panel info-panel">
+              <div class="section-header"><h3>Most demanded skills</h3></div>
+              <div class="chart-list">
+                <div class="chart-row">
+                  <span>WMS</span>
+                  <div class="bar-track"><span style="width:88%"></span></div>
+                </div>
+                <div class="chart-row">
+                  <span>Cold Chain</span>
+                  <div class="bar-track"><span style="width:82%"></span></div>
+                </div>
+                <div class="chart-row">
+                  <span>Route Planning</span>
+                  <div class="bar-track"><span style="width:78%"></span></div>
+                </div>
+                <div class="chart-row">
+                  <span>Cargo Handling</span>
+                  <div class="bar-track"><span style="width:74%"></span></div>
+                </div>
+                <div class="chart-row">
+                  <span>Inventory Analytics</span>
+                  <div class="bar-track"><span style="width:70%"></span></div>
+                </div>
+                <div class="chart-row">
+                  <span>Fleet Management</span>
+                  <div class="bar-track"><span style="width:68%"></span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel info-panel">
+              <div class="section-header"><h3>Regional skill gaps</h3></div>
+              <ul class="mini-list">
+                <li><strong>Pune</strong> — Warehouse Operations — High Gap</li>
+                <li><strong>Mumbai</strong> — Fleet Management — Medium Gap</li>
+                <li><strong>Bengaluru</strong> — WMS — High Gap</li>
+                <li><strong>Hyderabad</strong> — Cold Chain — Rising</li>
+                <li><strong>Chennai</strong> — Cargo Operations — High Gap</li>
+                <li><strong>Delhi NCR</strong> — Supply Chain Analytics — Rising</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="panel info-panel">
+            <div class="section-header"><h3>Emerging logistics roles</h3></div>
+            <div class="chips-wrap">
+              <span class="role-chip">Supply Chain Data Analyst</span>
+              <span class="role-chip">Cold Chain Specialist</span>
+              <span class="role-chip">Fleet Technology Operator</span>
+              <span class="role-chip">Warehouse Automation Associate</span>
+              <span class="role-chip">Logistics AI Coordinator</span>
+              <span class="role-chip">Cargo Operations Specialist</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="jobModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="jobModalTitle">
+        <button class="modal-close" type="button" aria-label="Close">×</button>
+        <div class="modal-body">
+          <p class="eyebrow accent">Job details</p>
+          <h3 id="jobModalTitle">Warehouse Associate</h3>
+          <div class="job-modal-meta" id="jobModalMeta"></div>
+          <div class="job-modal-section">
+            <h4>Responsibilities</h4>
+            <ul id="jobResponsibilities"></ul>
+          </div>
+          <div class="job-modal-section">
+            <h4>Requirements</h4>
+            <ul id="jobRequirements"></ul>
+          </div>
+          <button class="primary-btn wide-btn" type="button">Apply now</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="courseModal" class="modal hidden" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="courseTitle">
+        <button class="modal-close" type="button" aria-label="Close">×</button>
+        <div class="modal-body">
+          <p class="eyebrow accent">Course overview</p>
+          <h3 id="courseTitle">Cold-Chain Handling</h3>
+          <div class="course-grid">
+            <div>
+              <h4>Skills gained</h4>
+              <ul>
+                <li>Temperature-controlled storage</li>
+                <li>Cold chain SOPs</li>
+                <li>Inventory integrity checks</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Estimated duration</h4>
+              <p>4 weeks • 6 hours / week</p>
+              <h4>Industry demand</h4>
+              <p>High demand in Pune, Hyderabad and Chennai</p>
+            </div>
+          </div>
+          <div class="course-jobs">
+            <h4>Related jobs</h4>
+            <p>Cold Chain Associate • Warehouse Supervisor • Last-Mile Operations Lead</p>
+          </div>
+          <button class="primary-btn wide-btn" type="button">Start course</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="logiskyWidget" class="logisky-widget">
+      <button id="logiskyToggle" class="logisky-toggle" type="button" aria-expanded="false" aria-controls="logiskyPanel">✦ <span>Logisky</span></button>
+      <section id="logiskyPanel" class="logisky-panel hidden" aria-label="Logisky logistics assistant">
+        <div class="logisky-header"><div><strong>Logisky</strong><span>Your Logistics AI Assistant</span></div><button id="logiskyClose" class="icon-btn" type="button" aria-label="Close Logisky">×</button></div>
+        <p class="logisky-prompt">Ask me anything about logistics.</p>
+        <div id="logiskyMessages" class="logisky-messages" aria-live="polite"><div class="logisky-message assistant">Hi. I can help with logistics skills, courses, jobs and operations.</div></div>
+        <div class="logisky-suggestions">
+          <button type="button" data-question="Which skills are important for warehouse jobs?">Warehouse skills</button>
+          <button type="button" data-question="What is WMS?">What is WMS?</button>
+        </div>
+        <form id="logiskyForm" class="logisky-form"><input id="logiskyInput" type="text" placeholder="Ask a logistics question" aria-label="Ask Logisky" /><button type="submit" aria-label="Send question">↑</button></form>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
