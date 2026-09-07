@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LogiBridge | Bridging logistics talent with industry demand.</title>
+    <title>Logix | Logistics career and workforce platform</title>
     <meta
       name="description"
-      content="LogiBridge is a demand-driven skill development and workforce intelligence platform for India’s logistics sector."
+      content="Logix is a demand-driven skill development and workforce intelligence platform for India’s logistics sector."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,12 +19,12 @@
   <body>
     <div class="page-shell">
       <header class="topbar">
-        <div class="brand-wrap" aria-label="LogiBridge brand">
+        <div class="brand-wrap" aria-label="Logix brand">
           <div class="brand-mark" aria-hidden="true">
             <span class="bridge-shape"></span>
           </div>
           <div class="brand-text">
-            <span class="brand-name">LogiBridge</span>
+            <span class="brand-name">Logix</span>
             <small>Bridging logistics talent with industry demand.</small>
           </div>
         </div>
@@ -33,9 +33,10 @@
           <button class="nav-link active" data-view="profile">Profile</button>
           <button class="nav-link" data-view="dashboard">Dashboard</button>
           <button class="nav-link employee-only" data-view="skills">Skills</button>
-          <button class="nav-link" data-view="jobs">Jobs</button>
-          <button class="nav-link" data-view="learning">Learning</button>
-          <button class="nav-link" data-view="insights">Insights</button>
+          <button class="nav-link employee-only" data-view="learning">Learning</button>
+          <button class="nav-link employee-only" data-view="jobs">Jobs</button>
+          <button class="nav-link employer-only" data-view="hire">Hire Employee</button>
+          <button class="nav-link employer-only" data-view="insights">Insights</button>
         </nav>
 
         <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
@@ -51,7 +52,7 @@
                 <div class="brand-mark small" aria-hidden="true">
                   <span class="bridge-shape"></span>
                 </div>
-                <span class="brand-name">LogiBridge</span>
+                <span class="brand-name">Logix</span>
               </div>
 
               <h1>Build the workforce industry actually needs.</h1>
@@ -97,7 +98,7 @@
               </div>
 
               <div class="demo-alert">
-                Demo verification — do not enter real Aadhaar or OTP details.
+                Enter your phone number to access the prototype workspace. Do not use real sensitive information.
               </div>
 
               <form id="loginForm" novalidate>
@@ -112,22 +113,31 @@
                 </div>
 
                 <div class="field-group">
-                  <label for="aadhaarNumber">Aadhaar Number</label>
-                  <input id="aadhaarNumber" name="aadhaarNumber" type="text" inputmode="numeric" maxlength="12" placeholder="12-digit Aadhaar number" />
+                  <label for="emailAddress">Gmail</label>
+                  <input id="emailAddress" name="emailAddress" type="email" placeholder="you@gmail.com" autocomplete="email" required />
                 </div>
 
-                <div class="field-group otp-group">
-                  <label for="otpNumber">OTP</label>
-                  <div class="otp-row">
-                    <input id="otpNumber" name="otpNumber" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit OTP" disabled />
-                    <button type="button" id="sendOtpBtn" class="ghost-btn">Send OTP</button>
-                  </div>
-                  <small id="otpStatus" class="otp-status">OTP required</small>
+                <div class="field-group">
+                  <label for="aadhaarNumber">Aadhaar Number</label>
+                  <input id="aadhaarNumber" name="aadhaarNumber" type="text" inputmode="numeric" maxlength="12" placeholder="12-digit Aadhaar number" autocomplete="off" required />
+                </div>
+
+                <div class="field-group">
+                  <label for="locationCity">Location</label>
+                  <select id="locationCity" name="locationCity" required>
+                    <option value="">Select your city</option>
+                    <option>Delhi NCR</option>
+                    <option>Bengaluru</option>
+                    <option>Mumbai</option>
+                    <option>Pune</option>
+                    <option>Hyderabad</option>
+                    <option>Chennai</option>
+                  </select>
                 </div>
 
                 <div class="field-group">
                   <label for="gstinNumber">GSTIN</label>
-                  <input id="gstinNumber" name="gstinNumber" type="text" placeholder="Optional" />
+                  <input id="gstinNumber" name="gstinNumber" type="text" minlength="15" maxlength="15" placeholder="Optional for employees" />
                 </div>
 
                 <div id="formMessage" class="form-message" aria-live="polite"></div>
@@ -143,7 +153,7 @@
         <section id="role-page" class="page hidden" data-view="role">
           <div class="page-header narrow">
             <p class="eyebrow">Your workspace</p>
-            <h2>What brings you to LogiBridge?</h2>
+            <h2>What brings you to Logix?</h2>
             <p class="muted">Choose your role to get a workspace built around your needs.</p>
           </div>
 
@@ -220,27 +230,27 @@
           </div>
 
           <div class="workspace-grid">
-            <button class="workspace-card" data-open="dashboard">
+            <button class="workspace-card" data-open="hire">
               <span class="workspace-icon">🚚</span>
               <span class="workspace-title">Fleet</span>
               <span class="workspace-text">Vehicle requirements, capacity and cargo.</span>
             </button>
-            <button class="workspace-card" data-open="dashboard">
+            <button class="workspace-card" data-open="hire">
               <span class="workspace-icon">👨‍✈️</span>
               <span class="workspace-title">Drivers</span>
               <span class="workspace-text">Driver experience and licence needs.</span>
             </button>
-            <button class="workspace-card" data-open="dashboard">
+            <button class="workspace-card" data-open="hire">
               <span class="workspace-icon">🏭</span>
               <span class="workspace-title">Warehouse</span>
               <span class="workspace-text">Storage, size and WMS requirements.</span>
             </button>
-            <button class="workspace-card" data-open="dashboard">
+            <button class="workspace-card" data-open="hire">
               <span class="workspace-icon">📦</span>
               <span class="workspace-title">Cargo</span>
               <span class="workspace-text">Cargo type, handling and configuration.</span>
             </button>
-            <button class="workspace-card" data-open="dashboard">
+            <button class="workspace-card" data-open="hire">
               <span class="workspace-icon">👥</span>
               <span class="workspace-title">Workforce</span>
               <span class="workspace-text">Employee quantity, skills and experience.</span>
@@ -250,6 +260,40 @@
               <span class="workspace-title">Insights</span>
               <span class="workspace-text">Skill gaps and market demand.</span>
             </button>
+          </div>
+        </section>
+
+        <section id="employee-onboarding-page" class="page hidden" data-view="employee-onboarding">
+          <div class="page-header narrow">
+            <p class="eyebrow">Employee setup</p>
+            <h2>Tell us the work you want to do</h2>
+            <p class="muted">Your verified phone number is used automatically.</p>
+          </div>
+          <form id="employeeProfileForm" class="panel onboarding-form">
+            <div class="field-group"><label for="employeeName">Name</label><input id="employeeName" required maxlength="120" placeholder="Your full name" /></div>
+            <div class="field-group"><label for="employeePhone">Verified phone</label><input id="employeePhone" disabled /></div>
+            <div class="field-group"><label for="employeeJobPreference">Job you want to do</label><select id="employeeJobPreference" required><option value="">Select a category</option><option value="fleet">Fleet</option><option value="warehouse">Warehouse</option><option value="driver">Driver</option><option value="cargo">Cargo</option><option value="workforce">Workforce</option></select></div>
+            <div id="employeeProfileMessage" class="form-message" aria-live="polite"></div>
+            <button class="primary-btn wide-btn" type="submit">Save employee profile →</button>
+          </form>
+        </section>
+
+        <section id="employer-onboarding-page" class="page hidden" data-view="employer-onboarding">
+          <div class="page-header narrow"><p class="eyebrow">Employer setup</p><h2>Set up your company profile</h2><p class="muted">Your GSTIN format was validated during sign in. Live government verification is not enabled in this prototype.</p></div>
+          <form id="employerProfileForm" class="panel onboarding-form">
+            <div class="field-group"><label for="companyName">Company name</label><input id="companyName" required maxlength="150" placeholder="Your company name" /></div>
+            <div class="field-group"><label for="companyGstin">GSTIN</label><input id="companyGstin" disabled /></div>
+            <div id="employerProfileMessage" class="form-message" aria-live="polite"></div>
+            <button class="primary-btn wide-btn" type="submit">Save company profile →</button>
+          </form>
+        </section>
+
+        <section id="hire-page" class="page hidden" data-view="hire">
+          <div class="page-header narrow"><button class="back-btn" data-back type="button">← Back</button><p class="eyebrow">Employer workspace</p><h2>Hire Employee</h2><p class="muted">Choose a role to find employees registered through Logix.</p></div>
+          <div class="panel onboarding-form hire-panel">
+            <div class="field-group"><label for="hireJobType">Job type</label><select id="hireJobType"><option value="">Select a category</option><option value="fleet">Fleet</option><option value="warehouse">Warehouse</option><option value="driver">Driver</option><option value="cargo">Cargo</option><option value="workforce">Workforce</option></select></div>
+            <div id="hireMessage" class="form-message" aria-live="polite"></div>
+            <div id="matchingEmployees" class="job-list-grid"></div>
           </div>
         </section>
 
@@ -321,6 +365,11 @@
                 <span class="tag-status">Active</span>
               </div>
               <button id="logoutBtn" class="danger-btn full-width" type="button">Logout</button>
+            </div>
+
+            <div id="hiringRequestsCard" class="panel profile-card hidden">
+              <div class="section-header small-gap"><h3>Hiring requests</h3></div>
+              <div id="hiringRequests"></div>
             </div>
           </div>
         </section>
@@ -524,7 +573,7 @@
             <button class="back-btn" data-back type="button">← Back</button>
             <p class="eyebrow">Employee skills</p>
             <h2>Which skill do you want to develop?</h2>
-            <p class="muted">Start with one skill. LogiBridge will connect it to credible learning pathways and career readiness.</p>
+            <p class="muted">Start with one skill. Logix will connect it to credible learning pathways and career readiness.</p>
           </div>
 
           <section class="panel skills-discovery-panel">

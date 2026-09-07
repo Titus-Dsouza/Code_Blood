@@ -39,6 +39,22 @@ body[data-theme='dark'] {
   --line: rgba(200, 214, 207, 0.1);
 }
 
+body.employee-mode {
+  --primary: #16a9c4;
+  --primary-strong: #087cbb;
+  --primary-soft: rgba(22, 169, 196, 0.15);
+  --secondary: #baf3df;
+  --accent: #f7cd4c;
+}
+
+body.employer-mode {
+  --primary: #7553b8;
+  --primary-strong: #4b248d;
+  --primary-soft: rgba(117, 83, 184, 0.14);
+  --secondary: #ddd0fa;
+  --accent: #9a86de;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -517,6 +533,23 @@ body[data-theme='dark'] .panel {
   flex-direction: column;
   gap: 16px;
 }
+
+.onboarding-form {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 28px;
+}
+
+.hire-panel { max-width: 980px; }
+
+.request-card {
+  display: grid;
+  gap: 9px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.request-card:last-child { border-bottom: 0; }
 
 .field-group {
   display: flex;

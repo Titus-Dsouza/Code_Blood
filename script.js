@@ -1,10 +1,16 @@
 const STORAGE_KEYS = {
-  theme: 'logibridge-theme',
-  name: 'logibridge-name',
-  phone: 'logibridge-phone',
-  role: 'logibridge-role',
-  city: 'logibridge-city'
+  theme: 'logix-theme',
+  name: 'logix-name',
+  phone: 'logix-phone',
+  email: 'logix-email',
+  aadhaar: 'logix-aadhaar',
+  role: 'logix-role',
+  city: 'logix-city',
+  token: 'logix-token',
+  gstin: 'logix-gstin'
 };
+
+const API_BASE = "http://localhost:8000";
 
 const CITY_OPTIONS = [
   'Delhi NCR',
@@ -19,8 +25,12 @@ const appState = {
   theme: localStorage.getItem(STORAGE_KEYS.theme) || 'light',
   name: localStorage.getItem(STORAGE_KEYS.name) || '',
   phone: localStorage.getItem(STORAGE_KEYS.phone) || '',
+  email: localStorage.getItem(STORAGE_KEYS.email) || '',
+  aadhaar: localStorage.getItem(STORAGE_KEYS.aadhaar) || '',
   role: localStorage.getItem(STORAGE_KEYS.role) || '',
-  city: localStorage.getItem(STORAGE_KEYS.city) || 'Pune'
+  city: localStorage.getItem(STORAGE_KEYS.city) || 'Pune',
+  token: localStorage.getItem(STORAGE_KEYS.token) || '',
+  gstin: localStorage.getItem(STORAGE_KEYS.gstin) || ''
 };
 
 let selectedSkill = '';
@@ -276,10 +286,10 @@ const ui = {
   loginForm: document.getElementById('loginForm'),
   fullName: document.getElementById('fullName'),
   phoneNumber: document.getElementById('phoneNumber'),
+  emailAddress: document.getElementById('emailAddress'),
   aadhaarNumber: document.getElementById('aadhaarNumber'),
-  otpNumber: document.getElementById('otpNumber'),
-  sendOtpBtn: document.getElementById('sendOtpBtn'),
-  otpStatus: document.getElementById('otpStatus'),
+  locationCity: document.getElementById('locationCity'),
+  gstinNumber: document.getElementById('gstinNumber'),
   formMessage: document.getElementById('formMessage'),
   roleButtons: [...document.querySelectorAll('.role-btn')],
   workspaceCards: [...document.querySelectorAll('.workspace-card')],
@@ -320,15 +330,52 @@ const ui = {
   logiskyClose: document.getElementById('logiskyClose'),
   logiskyForm: document.getElementById('logiskyForm'),
   logiskyInput: document.getElementById('logiskyInput'),
-  logiskyMessages: document.getElementById('logiskyMessages')
+  logiskyMessages: document.getElementById('logiskyMessages'),
+  employeeProfileForm: document.getElementById('employeeProfileForm'),
+  employeeName: document.getElementById('employeeName'),
+  employeePhone: document.getElementById('employeePhone'),
+  employeeJobPreference: document.getElementById('employeeJobPreference'),
+  employeeProfileMessage: document.getElementById('employeeProfileMessage'),
+  employerProfileForm: document.getElementById('employerProfileForm'),
+  companyName: document.getElementById('companyName'),
+  companyGstin: document.getElementById('companyGstin'),
+  employerProfileMessage: document.getElementById('employerProfileMessage'),
+  hireJobType: document.getElementById('hireJobType'),
+  hireMessage: document.getElementById('hireMessage'),
+  matchingEmployees: document.getElementById('matchingEmployees'),
+  hiringRequestsCard: document.getElementById('hiringRequestsCard'),
+  hiringRequests: document.getElementById('hiringRequests')
 };
 
 function saveState() {
   localStorage.setItem(STORAGE_KEYS.theme, appState.theme);
   localStorage.setItem(STORAGE_KEYS.name, appState.name || '');
   localStorage.setItem(STORAGE_KEYS.phone, appState.phone || '');
+  localStorage.setItem(STORAGE_KEYS.email, appState.email || '');
+  localStorage.setItem(STORAGE_KEYS.aadhaar, appState.aadhaar || '');
   localStorage.setItem(STORAGE_KEYS.role, appState.role || '');
   localStorage.setItem(STORAGE_KEYS.city, appState.city || 'Pune');
+  localStorage.setItem(STORAGE_KEYS.token, appState.token || '');
+  localStorage.setItem(STORAGE_KEYS.gstin, appState.gstin || '');
+}
+
+async function api(path, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (appState.token) headers.Authorization = `Bearer ${appState.token}`;
+  try {
+    const response = await fetch(`${API_BASE}${path}`, { ...options, headers });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const detail = body.detail;
+      const message = typeof detail === 'object' ? detail.message : detail;
+      const labels = { 400: 'Invalid request', 401: 'Authentication required', 403: 'Unauthorized', 404: 'Not found', 409: 'This action conflicts with existing data', 422: 'Invalid input', 429: 'Too many requests', 500: 'Server error', 503: 'Service unavailable' };
+      throw new Error(message || labels[response.status] || 'Request failed');
+    }
+    return body;
+  } catch (error) {
+    if (error instanceof TypeError) throw new Error('Unable to connect to Logix server. Please make sure the backend is running.');
+    throw error;
+  }
 }
 
 function applyTheme(theme) {
@@ -368,6 +415,9 @@ function showView(viewName, options = {}) {
     if (link.classList.contains('employee-only')) {
       link.hidden = appState.role !== 'employee';
     }
+    if (link.classList.contains('employer-only')) {
+      link.hidden = appState.role !== 'employer';
+    }
   });
 
   if (options.replaceUrl !== false && window.location.hash !== `#${viewName}`) {
@@ -385,6 +435,38 @@ function applyRoleMode() {
   ui.body.classList.toggle('employer-mode', appState.role === 'employer');
 }
 
+async function loadEmployeeProfile() {
+  const profile = await api('/api/employee/profile');
+  appState.name = profile.name;
+  appState.phone = profile.phone;
+  saveState();
+  return profile;
+}
+
+async function loadEmployerProfile() {
+  const profile = await api('/api/employer/profile');
+  appState.name = profile.company_name;
+  appState.gstin = profile.gstin;
+  saveState();
+  return profile;
+}
+
+async function loadHiringRequests() {
+  if (appState.role !== 'employee' || !ui.hiringRequests) return;
+  try {
+    const requests = await api('/api/employee/hiring-requests');
+    ui.hiringRequestsCard.classList.remove('hidden');
+    ui.hiringRequests.innerHTML = requests.length ? requests.map((request) => `
+      <article class="request-card"><strong>${request.company_name || 'Logix employer'}</strong><span>${request.job_type}</span><em class="tag-status">${request.status}</em>
+      ${request.status === 'pending' ? `<div class="button-row"><button class="primary-btn request-action" data-request="${request.id}" data-status="accepted">Accept</button><button class="secondary-btn request-action" data-request="${request.id}" data-status="rejected">Reject</button></div>` : ''}
+      </article>`).join('') : '<p class="muted">No hiring requests yet.</p>';
+    ui.hiringRequests.querySelectorAll('.request-action').forEach((button) => button.addEventListener('click', async () => {
+      try { await api(`/api/employee/hiring-requests/${button.dataset.request}`, { method: 'PATCH', body: JSON.stringify({ status: button.dataset.status }) }); await loadHiringRequests(); }
+      catch (error) { alert(error.message); }
+    }));
+  } catch (error) { console.warn(error.message); }
+}
+
 function toggleNavVisibility(isLoggedIn) {
   ui.mainNav.hidden = !isLoggedIn;
 }
@@ -397,12 +479,13 @@ function maskPhone(phone) {
 function renderProfile() {
   if (!ui.profileName || !ui.profileRole || !ui.profilePhone || !ui.profileCity) return;
 
-  ui.profileName.textContent = appState.name || 'LogiBridge User';
+  ui.profileName.textContent = appState.name || 'Logix User';
   ui.profileRole.textContent = appState.role ? appState.role.charAt(0).toUpperCase() + appState.role.slice(1) : 'Employee';
   ui.profilePhone.textContent = maskPhone(appState.phone);
   ui.profileCity.textContent = appState.city || 'Pune';
   const dashboardName = appState.name || 'Team Member';
   ui.dashboardTitle.textContent = `Good to see you, ${dashboardName}.`;
+  loadHiringRequests();
 }
 
 function renderDashboard() {
@@ -587,16 +670,13 @@ function updateProfileToggle() {
 }
 
 function logout() {
-  ['name', 'phone', 'role', 'city'].forEach((key) => {
+  ['name', 'phone', 'email', 'aadhaar', 'role', 'city', 'token', 'gstin'].forEach((key) => {
     localStorage.removeItem(STORAGE_KEYS[key]);
     appState[key] = key === 'city' ? 'Pune' : '';
   });
   showView('login');
   toggleNavVisibility(false);
   ui.loginForm.reset();
-  ui.otpNumber.disabled = true;
-  ui.otpStatus.textContent = 'OTP required';
-  ui.otpStatus.classList.remove('success');
   ui.formMessage.textContent = '';
   viewHistory.length = 0;
   applyRoleMode();
@@ -610,27 +690,7 @@ function validateAadhaar(value) {
   return /^\d{12}$/.test(value);
 }
 
-function validateOtp(value) {
-  return /^\d{6}$/.test(value);
-}
-
-function handleSendOtp() {
-  if (!validatePhone(ui.phoneNumber.value.trim())) {
-    ui.formMessage.textContent = 'Please enter a valid 10-digit phone number.';
-    return;
-  }
-  if (!validateAadhaar(ui.aadhaarNumber.value.trim())) {
-    ui.formMessage.textContent = 'Please enter a valid 12-digit Aadhaar number.';
-    return;
-  }
-  ui.otpNumber.disabled = false;
-  ui.otpNumber.focus();
-  ui.otpStatus.textContent = 'OTP sent ✓';
-  ui.otpStatus.classList.add('success');
-  ui.formMessage.textContent = '';
-}
-
-function handleLoginSubmit(event) {
+async function handleLoginSubmit(event) {
   event.preventDefault();
 
   if (!ui.fullName.value.trim()) {
@@ -641,39 +701,84 @@ function handleLoginSubmit(event) {
     ui.formMessage.textContent = 'Please enter a valid 10-digit phone number.';
     return;
   }
+  if (!ui.emailAddress.value.trim().toLowerCase().endsWith('@gmail.com')) {
+    ui.formMessage.textContent = 'Please enter a valid Gmail address.';
+    return;
+  }
   if (!validateAadhaar(ui.aadhaarNumber.value.trim())) {
     ui.formMessage.textContent = 'Please enter a valid 12-digit Aadhaar number.';
     return;
   }
-  if (!validateOtp(ui.otpNumber.value.trim())) {
-    ui.formMessage.textContent = 'Please enter the 6-digit OTP sent to your demo device.';
+  if (!ui.locationCity.value) {
+    ui.formMessage.textContent = 'Please select your location.';
     return;
   }
-
-  appState.name = ui.fullName.value.trim();
-  appState.phone = ui.phoneNumber.value.trim();
-  appState.city = appState.city || 'Pune';
-  saveState();
-  renderProfile();
-  toggleNavVisibility(true);
-  showView('role');
+  try {
+    const gstin = ui.gstinNumber.value.trim();
+    const result = await api('/api/auth/login', { method: 'POST', body: JSON.stringify({ phone: ui.phoneNumber.value.trim(), email: ui.emailAddress.value.trim(), aadhaar: ui.aadhaarNumber.value.trim(), city: ui.locationCity.value, gstin: gstin || undefined }) });
+    appState.name = ui.fullName.value.trim(); appState.phone = ui.phoneNumber.value.trim(); appState.email = ui.emailAddress.value.trim().toLowerCase(); appState.aadhaar = ui.aadhaarNumber.value.trim(); appState.city = ui.locationCity.value; appState.role = result.role; appState.token = result.token; appState.gstin = ui.gstinNumber?.value.trim().toUpperCase() || ''; saveState();
+    applyRoleMode(); toggleNavVisibility(true);
+    if (appState.role === 'employee') await continueEmployee(); else await continueEmployer();
+  } catch (error) { ui.formMessage.textContent = error.message; }
 }
 
 function handleRoleSelection(role) {
-  appState.role = role;
-  saveState();
-  renderProfile();
-  renderDashboard();
-  applyRoleMode();
-  if (role === 'employee') {
-    showView('employee-workspace');
-  } else {
-    showView('employer-workspace');
+  // Roles are selected by the verified backend account, never by this UI.
+  if (role === appState.role) {
+    showView(role === 'employee' ? 'employee-workspace' : 'employer-workspace');
   }
 }
 
+async function continueEmployee() {
+  try { await loadEmployeeProfile(); renderProfile(); renderDashboard(); showView('employee-workspace'); }
+  catch (error) {
+    if (error.message === 'Employee profile not found') {
+      ui.employeeName.value = appState.name; ui.employeePhone.value = appState.phone; showView('employee-onboarding');
+    } else { ui.formMessage.textContent = error.message; }
+  }
+}
+
+async function continueEmployer() {
+  try { await loadEmployerProfile(); renderProfile(); renderDashboard(); showView('employer-workspace'); }
+  catch (error) {
+    if (error.message === 'Employer profile not found') { ui.companyGstin.value = appState.gstin; showView('employer-onboarding'); }
+    else { ui.formMessage.textContent = error.message; }
+  }
+}
+
+async function submitEmployeeProfile(event) {
+  event.preventDefault();
+  try {
+    await api('/api/employee/profile', { method: 'POST', body: JSON.stringify({ name: ui.employeeName.value.trim(), job_preference: ui.employeeJobPreference.value }) });
+    await continueEmployee();
+  } catch (error) { ui.employeeProfileMessage.textContent = error.message; }
+}
+
+async function submitEmployerProfile(event) {
+  event.preventDefault();
+  try {
+    await api('/api/employer/profile', { method: 'POST', body: JSON.stringify({ company_name: ui.companyName.value.trim(), gstin: appState.gstin }) });
+    await continueEmployer();
+  } catch (error) { ui.employerProfileMessage.textContent = error.message; }
+}
+
+async function findEmployees() {
+  const jobType = ui.hireJobType.value;
+  if (!jobType) { ui.matchingEmployees.innerHTML = ''; return; }
+  try {
+    ui.hireMessage.textContent = 'Finding registered employees…';
+    const result = await api(`/api/employer/employees?job_type=${encodeURIComponent(jobType)}`);
+    ui.hireMessage.textContent = result.count ? `${result.count} matching employee${result.count === 1 ? '' : 's'} found.` : 'No registered employees match this category yet.';
+    ui.matchingEmployees.innerHTML = result.results.map((employee) => `<article class="job-card"><h3>${employee.name}</h3><p>${employee.job_preference}</p><div class="job-actions"><span class="match-badge">Registered match</span><button class="primary-btn hire-employee" data-employee="${employee.id}" data-job="${jobType}">Hire</button></div></article>`).join('');
+    ui.matchingEmployees.querySelectorAll('.hire-employee').forEach((button) => button.addEventListener('click', async () => {
+      try { await api('/api/employer/hiring-requests', { method: 'POST', body: JSON.stringify({ employee_id: Number(button.dataset.employee), job_type: button.dataset.job }) }); button.disabled = true; button.textContent = 'Request sent'; }
+      catch (error) { ui.hireMessage.textContent = error.message; }
+    }));
+  } catch (error) { ui.hireMessage.textContent = error.message; }
+}
+
 function handleNavView(viewName) {
-  const loggedIn = !!appState.name;
+  const loggedIn = !!appState.token;
   if (!loggedIn) {
     showView('login');
     return;
@@ -708,6 +813,8 @@ function handleNavView(viewName) {
     return;
   }
 
+  if (viewName === 'hire') { showView('hire'); return; }
+
   if (viewName === 'skills') {
     renderSkills();
     showView('skills');
@@ -731,12 +838,12 @@ function initEvents() {
     applyTheme(nextTheme);
   });
 
-  ui.sendOtpBtn?.addEventListener('click', handleSendOtp);
   ui.loginForm?.addEventListener('submit', handleLoginSubmit);
+  ui.employeeProfileForm?.addEventListener('submit', submitEmployeeProfile);
+  ui.employerProfileForm?.addEventListener('submit', submitEmployerProfile);
+  ui.hireJobType?.addEventListener('change', findEmployees);
 
-  ui.roleButtons.forEach((button) => {
-    button.addEventListener('click', () => handleRoleSelection(button.dataset.role));
-  });
+  ui.roleButtons.forEach((button) => button.addEventListener('click', () => handleRoleSelection(button.dataset.role)));
 
   ui.workspaceCards.forEach((card) => {
     card.addEventListener('click', () => {
@@ -763,6 +870,10 @@ function initEvents() {
       }
       if (target === 'insights') {
         showView('insights');
+        return;
+      }
+      if (target === 'hire') {
+        showView('hire');
         return;
       }
       renderDashboard();
@@ -856,14 +967,14 @@ function initEvents() {
 }
 
 function enforceSession() {
-  const loggedIn = !!appState.name;
+  const loggedIn = !!appState.token;
   toggleNavVisibility(loggedIn);
 
   if (loggedIn) {
     applyRoleMode();
-    renderProfile();
-    renderDashboard();
-    showView(appState.role === 'employee' ? 'employee-workspace' : appState.role === 'employer' ? 'employer-workspace' : 'profile', { replaceUrl: false });
+    if (appState.role === 'employee') continueEmployee();
+    else if (appState.role === 'employer') continueEmployer();
+    else logout();
     return;
   }
 
