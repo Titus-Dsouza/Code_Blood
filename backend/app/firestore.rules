@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function roleIs(role) {
+      return signedIn()
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    // User documents contain public profile data only. Role and identity fields
+    // are written by the Admin SDK after the server verifies the ID token.
+    match /users/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow list, create, update, delete: if false;
+    }
+
+    match /employees/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || roleIs('employer'));
+      allow list: if roleIs('employer');
+      allow write: if false;
+    }
+    match /employee_profiles/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || roleIs('employer'));
+      allow list: if roleIs('employer');
+      allow write: if false;
+    }
+
+    match /employers/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || roleIs('employee') || roleIs('employer'));
+      allow list: if signedIn();
+      allow write: if false;
+    }
+    match /employer_profiles/{uid} {
+      allow get: if signedIn() && (request.auth.uid == uid || roleIs('employee') || roleIs('employer'));
+      allow list: if signedIn();
+      allow write: if false;
+    }
+
+    match /jobs/{jobId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /jobRequirements/{requirementId} {
+      allow get: if signedIn() && (resource.data.employer_id == request.auth.uid || roleIs('employee'));
+      allow list: if roleIs('employer') || roleIs('employee');
+      allow write: if false;
+    }
+    match /requirements/{requirementId} {
+      allow get: if signedIn() && (resource.data.employer_id == request.auth.uid || roleIs('employee'));
+      allow list: if roleIs('employer') || roleIs('employee');
+      allow write: if false;
+    }
+
+    match /applications/{applicationId} {
+      allow read: if signedIn() && (resource.data.employee_id == request.auth.uid || resource.data.employer_id == request.auth.uid);
+      allow write: if false;
+    }
+
+    match /hiring_requests/{requestId} {
+      allow read: if signedIn() && (resource.data.employee_id == request.auth.uid || resource.data.employer_id == request.auth.uid);
+      allow write: if false;
+    }
+    match /hiringRequests/{requestId} {
+      allow read: if signedIn() && (resource.data.employee_id == request.auth.uid || resource.data.employer_id == request.auth.uid);
+      allow write: if false;
+    }
+
+    match /skills/{skillId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /learning_resources/{resourceId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+    match /learningResources/{resourceId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    match /news/{newsId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
+    // HMAC Aadhaar references and GSTIN values never leave the server.
+    match /private_identity/{uid} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

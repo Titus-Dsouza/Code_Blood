@@ -1,0 +1,60 @@
+# Environment and credentials
+**/.env
+**/.env.*
+!**/.env.example
+**/secrets/**
+**/credentials/**
+**/*service-account*.json
+**/*serviceAccount*.json
+**/*service_account*.json
+**/*firebase-admin*.json
+**/*-adminsdk-*.json
+**/*credentials*.json
+**/*credential*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.p8
+*.der
+*.credentials
+*.token
+.netrc
+.npmrc
+.pypirc
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+**/.venv/
+**/.venv*/
+**/venv/
+
+# JavaScript and generated tooling
+node_modules/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+coverage/
+dist/
+build/
+**/.firebase/
+firebase-debug.log
+firestore-debug.log
+*.log
+
+# Local databases and generated local files
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-journal
+.DS_Store
+.vscode/
+
+# IDE
+.vscode/
+.DS_Store
