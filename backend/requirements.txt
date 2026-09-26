@@ -1,0 +1,7 @@
+Django>=5.2,<5.3
+djangorestframework>=3.15,<4
+django-cors-headers>=4.4,<5
+firebase-admin>=6.5,<7
+python-dotenv>=1.0,<2
+pytest>=8,<9
+pytest-django>=4.9,<5
